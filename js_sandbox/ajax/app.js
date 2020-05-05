@@ -1,25 +1,24 @@
-document.getElementById('button').addEventListener('click', loadData);
+document.getElementById('button1').addEventListener('click', loadCustomer);
 
-function loadData(e) {
-    // Create an XHR Object
+function loadCustomer(e) {
     const xhr = new XMLHttpRequest();
 
-    // Open
-    xhr.open('GET', 'data.txt', true);
-
-    // Optional - used for spinners/loaders
-    xhr.onprogress = function(){
-        console.log(this.readyState);
-    }
+    xhr.open('GET', 'customer.json', true);
 
     xhr.onload = function() {
-        console.log('Readystate', xhr.readyState);
         if(this.status === 200) {
-            document.getElementById('output').innerHTML = `<h1> ${this.responseText} </h1>`;
-        } 
-    }
-    xhr.onerror = function() {
-        console.log('Request Error');
+            const customer = JSON.parse(this.responseText);
+            const output = `
+                <ul>
+                    <li>ID: ${customer.id}</li>
+                    <li>ID: ${customer.name}</li>
+                    <li>ID: ${customer.company}</li>
+                    <li>ID: ${customer.phone}</li>
+                </ul>
+            `; 
+
+            document.getElementById('customer').innerHTML = output;
+        }
     }
 
     xhr.send();
